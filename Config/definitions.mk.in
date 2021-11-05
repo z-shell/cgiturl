@@ -1,0 +1,50 @@
+# License -> cgiturl.git/LICENSE
+
+SHELL = /bin/sh
+@SET_MAKE@
+EXEEXT = @EXEEXT@
+
+# prefix directories
+prefix          = @prefix@
+exec_prefix     = @exec_prefix@
+bindir          = @bindir@
+libdir          = @libdir@
+infodir         = @infodir@
+mandir          = @mandir@
+datarootdir     = @datarootdir@
+datadir         = @datadir@
+MODDIR          = $(libdir)/VATS/$(VERSION)
+
+# compiler
+CC              = @CC@
+CPP             = @CPP@
+CPPFLAGS        = @CPPFLAGS@
+DEFS            = @DEFS@
+CFLAGS          = @CFLAGS@
+LDFLAGS         = @LDFLAGS@
+LIBS            = @LIBS@
+
+# utils
+AWK             = @AWK@
+
+# install program
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_DATA    = @INSTALL_DATA@
+
+# passed to recursive makes in subdirectories
+MAKEDEFS = \
+prefix='$(prefix)' exec_prefix='$(exec_prefix)' bindir='$(bindir)' \
+libdir='$(libdir)' datadir='$(datadir)' mandir='$(mandir)' infodir='$(infodir)' \
+MODDIR='$(MODDIR)' \
+CC='$(CC)' CPPFLAGS='$(CPPFLAGS)' DEFS='$(DEFS)' CFLAGS='$(CFLAGS)' \
+LDFLAGS='$(LDFLAGS)' LIBS='$(LIBS)' \
+AWK='$(AWK)'
+
+# to override built-in suffix list
+.SUFFIXES:
+
+# no support for parallel build (pmake, gmake)
+.NOTPARALLEL:
+
+# no support for parallel build (dmake)
+.NO_PARALLEL:

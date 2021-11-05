@@ -1,0 +1,58 @@
+# -*- Mode: Make; sh-indentation: 8; indent-tabs-mode: t; sh-basic-offset: 8; -*-
+# vim:ft=make:sw=8:sts=8:noet
+#
+# License -> cgiturl.git/LICENSE
+#
+
+subdir = .
+dir_top = .
+SUBDIRS = VATS
+
+@VERSION_MK@
+
+VPATH           = @srcdir@
+sdir            = @srcdir@
+top_sdir        = @top_srcdir@
+INSTALL         = @INSTALL@
+
+@DEFINITIONS_MK@
+
+# Use this to build the tested program
+all: config.h
+	#cd Src && $(MAKE) $(MAKEDEFS) $@
+	@echo TARGET: all
+
+# Use this to copy required files to VATS directory
+install.modules uninstall.modules:
+	# @cd Src && $(MAKE) $(MAKEDEFS) $@
+	@echo TARGET: install.modules
+
+@CLEAN_MK@
+
+distclean-here:
+	rm -f VATSMakefile config.h config.status config.log config.cache stamp-h Config/definitions.mk
+	rm -rf autom4te.cache
+
+realclean-here:
+	cd $(sdir) && rm -f config.h.in stamp-h.in configure
+
+@CONFIG_VATS_MK@
+
+config: config.h
+
+config.status: $(sdir)/configure
+	$(SHELL) ./config.status --recheck
+
+$(sdir)/configure: $(sdir)/aclocal.m4 $(sdir)/configure.ac
+	cd $(sdir) && autoconf
+
+config.h: stamp-h
+stamp-h: $(sdir)/config.h.in config.status
+	cd $(dir_top) && $(SHELL) ./config.status config.h $@
+
+$(sdir)/config.h.in: $(sdir)/stamp-h.in
+$(sdir)/stamp-h.in: $(sdir)/configure
+	cd $(sdir) && autoheader
+	echo > $(sdir)/stamp-h.in
+
+FORCE:
