@@ -2,6 +2,10 @@
 
 ---
 
+> **Note:** 
+> - This repository is outdated and may not work properly.
+> - Please consider opening a pull request or an issue, if would like to speed up development.
+
 ## What is CGiturl?
 
 It's a tool that allows you to pack Git repository data into single URL. For example:
